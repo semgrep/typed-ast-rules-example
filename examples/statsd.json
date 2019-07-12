@@ -1,0 +1,54 @@
+{
+  "target": "https://github.com/etsy/statsd",
+  "target_hash": "8d5363cb109cc6363661a1d5813e0b96787c4411",
+  "expected": [
+    {
+      "check_id": "non-literal-require",
+      "path": "proxy.js",
+      "start": {
+        "line": 105,
+        "col": 20
+      },
+      "end": {
+        "line": 105,
+        "col": 42
+      }
+    },
+    {
+      "check_id": "non-literal-require",
+      "path": "stats.js",
+      "start": {
+        "line": 36,
+        "col": 19
+      },
+      "end": {
+        "line": 36,
+        "col": 32
+      }
+    },
+    {
+      "check_id": "non-literal-require",
+      "path": "stats.js",
+      "start": {
+        "line": 55,
+        "col": 18
+      },
+      "end": {
+        "line": 55,
+        "col": 31
+      }
+    },
+    {
+      "check_id": "non-literal-require",
+      "path": "test/repeater_tests.js",
+      "start": {
+        "line": 19,
+        "col": 18
+      },
+      "end": {
+        "line": 19,
+        "col": 37
+      }
+    }
+  ]
+}

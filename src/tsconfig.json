@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es2018",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true
+  }
+}
