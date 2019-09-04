@@ -1,9 +1,9 @@
 import * as estree from "estree";
 import * as stadt from "stadt";
-import { Context, Rule, getType, possibleTypes } from "./index";
+import { Context, Rule } from "@r2c/typed-ast-util";
 
 function isRequire(ty: stadt.Type): boolean {
-  if (!(ty instanceof stadt.NominativeType)) {
+  if (!ty.isNominative()) {
     return false;
   }
   const { name, packageName } = ty.fullyQualifiedName;
@@ -17,8 +17,10 @@ export const rule: Rule = {
   create(context: Context) {
     return {
       CallExpression(node: estree.CallExpression) {
-        const ty = getType(node.callee);
-        if (!(ty && possibleTypes(ty).some(isRequire))) {
+        const ty = stadt.fromJSON(node.callee.inferredType);
+        // We use mustSatisfy on the off chance that someone is doing something
+        // like (someCondition ? require : someOtherThing)("module");
+        if (ty.mustSatisfy(t => !isRequire(t))) {
           return;
         }
         const args = node.arguments;
@@ -26,10 +28,8 @@ export const rule: Rule = {
           // An empty require is invalid, but not insecure.
           return;
         }
-        const argType = getType(args[0]);
-        const isSafe =
-          argType &&
-          possibleTypes(argType).every(t => t instanceof stadt.LiteralType);
+        const argType = stadt.fromJSON(args[0].inferredType);
+        const isSafe = argType.mustSatisfy(t => t.isLiteral());
         if (!isSafe) {
           context.report({
             node,
